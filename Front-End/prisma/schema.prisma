@@ -1,0 +1,73 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Définition de la table Objet
+model objets {
+  id                    Int      @id @default(autoincrement())
+  barrecode             String   @unique
+  serial_number         Int      @unique
+  hardware_version      Int
+  firmware_version      Int
+  creation_date         String
+  lot_number            Int
+  utilisateur           String   @default("")
+}
+
+// Définition de la table Lot
+model lots {
+  id                    Int          @id @default(autoincrement())
+  lot_number            Int          @unique
+  objects_number        Int
+  objects               Int[]
+  production_date       String
+  recuperation_date     String       @default("")
+  delivery_date         String       @default("")
+  destination           String       @default("")
+  transporteur          String       @default("")
+  client                String       @default("")
+}
+
+// Définition de la table Producteur
+model producteurs {
+  id                    Int      @id @default(autoincrement())
+  firstname             String
+  lastname              String
+  email                 String   @unique
+  password              String
+  profil_picture        String   @default("")
+  nombre_lots           Int      @default(0)
+  lots                  Int[]    @default([])
+}
+
+// Définition de la table Transporteur
+model transporteurs {
+  id                    Int      @id @default(autoincrement())
+  firstname             String
+  lastname              String
+  email                 String   @unique
+  password              String
+  profil_picture        String   @default("")   
+  number_recupered_lot  Int      @default(0)
+  recupered_lots        Int[]   @default([])
+  number_delivered_lot  Int      @default(0)  
+  delivered_lots        Int[]    @default([])  
+}
+
+// Définition de la table Utilisateur
+model utilisateurs {
+  id                    Int      @id @default(autoincrement())
+  firstname             String
+  lastname              String
+  email                 String   @unique
+  password              String
+  profil_picture        String   @default("")
+  serial_number_object  String   @unique      @default("")
+  activation            Boolean  @default(false)
+  renewal_date          String   @default("")
+}

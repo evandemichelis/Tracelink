@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "producteurs" ALTER COLUMN "nombreLots" SET DEFAULT 0,
+ALTER COLUMN "lots" SET DEFAULT ARRAY[]::INTEGER[];
